@@ -43,9 +43,9 @@ class Posts extends React.Component {
     return (
       <>
         {isLoading && <Loader />}
-        {!isLoading && totalCount === 0 && (
-          <div className="text-center">
-            <h2>There is nothing</h2>
+        {!isLoading && totalCount === 0 && posts.length === 0 && (
+            <div className="text-center">
+              <h2>There is nothing</h2>
           </div>
         )}
         {posts.map((p) => <Post post={p} key={p._id} TYPE={UPDATE_POSTS} />)}
