@@ -10,8 +10,8 @@ class AllPosts extends React.Component {
   render() {
     const { auth } = this.props
     return (
-      <div className="row mt-4">
-        <div className="col-md-6 mx-auto">
+      <div className="row mt-6">
+        <div className="col-md-12 mx-auto">
           {auth.isAuthenticated && <PostForm />}
           <Posts queryParams={{}} />
         </div>
