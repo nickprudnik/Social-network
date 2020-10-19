@@ -36,17 +36,21 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <>
-          <Header />
-          <div className="container">
+          <div id="parent-root" className="root-element">
+          <Header pageWrapId={"page-wrap"} outerContainerId={"parent-root"}/>
+            <div className="container">
+            <div className="page-wrap">
             <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route exact path="/" component={AllPosts} />
-            <Route path="/post/:id" component={SinglePost} />
-            <Route path="/user/:id" component={UserProfile} />
-            <Switch>
-              <PrivateRoute path="/feed" component={Feed} />
-            </Switch>
-            <Route path="/404" component={NotFound} />
+              <Route path="/login" component={Login} />
+              <Route exact path="/" component={AllPosts} />
+              <Route path="/post/:id" component={SinglePost} />
+              <Route path="/user/:id" component={UserProfile} />
+              <Switch>
+                <PrivateRoute path="/feed" component={Feed} />
+              </Switch>
+              <Route path="/404" component={NotFound} />
+            </div>
+            </div>
           </div>
           <Footer />
         </>
