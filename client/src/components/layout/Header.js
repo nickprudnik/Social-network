@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import "./index.css"
+import { slide as Menu } from "react-burger-menu";
 
 import { logout } from "../../actions/auth";
 
@@ -11,70 +13,45 @@ class Header extends React.Component {
     this.props.logout();
   };
 
+  
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     let links;
     if (isAuthenticated) {
       links = (
-        <li className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i className="fa fa-user"></i>
-            Account
-          </a>
-          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <Link className="dropdown-item" to={"/user/" + user.id}>
+        <li>
+          <ul>
+            <li><Link className="menu-item" to={"/user/" + user.id}>
               My Profile
-            </Link>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" href="#" onClick={this.onLogout}>
-              Log Out
-            </a>
-          </div>
+            </Link></li>
+            <li><Link className="menu-item" href="#" onClick={this.onLogout}>Log Out</Link></li>
+          </ul>
         </li>
       );
     } else {
       links = (
-        <>
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">
+        <ul>
+            <li><Link className="menu-item" to="/login">
               <i className="fa fa-sign-in"></i>
               Log In
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/register">
+            </Link></li>
+            <li><Link className="menu-item" to="/register">
               <i className="fa fa-user-plus"></i>
               Register
-            </Link>
-          </li>
-        </>
+            </Link></li>
+        </ul>
       );
     }
     return (
+      <>
+      <Menu {...this.props} className="navbar-nav">{links}</Menu>
       <nav className="navbar navbar-icon-top navbar-expand-lg navbar-light">
         <div className="container">
           <Link className="navbar-brand" to="/">
             Itech-feed
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               {isAuthenticated && (
@@ -86,10 +63,11 @@ class Header extends React.Component {
                 </li>
               )}
             </ul>
-            <ul className="navbar-nav">{links}</ul>
+            
           </div>
         </div>
       </nav>
+      </>
     );
   }
 }

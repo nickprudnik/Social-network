@@ -1,5 +1,19 @@
 .main-footer {
-    height: auto;
-    margin-top: 0;
-    position: relative;
+    height: 50px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.menu-item {
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.menu-item:hover {
+    text-decoration: none;
 }
