@@ -1,8 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { FormErrorsEmail, FormErrorsPassword, FormErrorsName } from "./FormErrors";
 
-import { register } from '../../actions/auth'
+import { register } from '../../actions/auth';
 
 class Register extends React.Component {
 
@@ -11,7 +12,13 @@ class Register extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      formErrors: {email: ''},
+      formErrorsPassword: { password: ''},
+      formErrorsName: { name: '' },
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
     }
   }
 
@@ -21,7 +28,51 @@ class Register extends React.Component {
     }
   }
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+  onChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value},
+                  () => { this.validateField(name, value) });
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let passwordFieldValidation = this.state.formErrorsPassword;
+    let nameFieldValidation = this.state.formErrorsName;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+    let namedValid = this.state.namedValid;
+  switch(fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : 'Email is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        passwordFieldValidation.password = passwordValid ? '': 'Password is too short';
+        break;
+      case 'name':
+        namedValid = value.length >= 3;
+        nameFieldValidation.name = namedValid ? '': 'Name is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    formErrorsPassword: passwordFieldValidation,
+                    formErrorsName: nameFieldValidation,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid,
+                    namedValid: namedValid
+                  }, this.validateForm);
+  }
+  validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid && this.state.namedValid});
+  }
+  
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
+ }
 
   onSubmit = (e) => {
     e.preventDefault()
@@ -44,16 +95,16 @@ class Register extends React.Component {
                       </span>
                     </div>
                     <input
-                      className="form-control"
+                      className={`form-control ${this.errorClass(this.state.formErrorsName.name)}`}
                       placeholder="Name"
                       type="text"
                       name="name"
                       value={this.state.name}
                       onChange={this.onChange}
-                      pattern=".{3,20}"
                       required
                     />
                   </div>
+                <FormErrorsName formErrorsName={this.state.formErrorsName} />
                 </div>
                 <div className="form-group">
                   <div className="input-group">
@@ -63,16 +114,16 @@ class Register extends React.Component {
                       </span>
                     </div>
                     <input
-                      className="form-control"
+                      className={`form-control ${this.errorClass(this.state.formErrors.email)}`}
                       placeholder="Email"
                       type="email"
                       name="email"
                       value={this.state.email}
                       onChange={this.onChange}
-                      pattern=".{5,30}"
                       required
                     />
                   </div>
+                  <FormErrorsEmail formErrors={this.state.formErrors} />
                 </div>
                 <div className="form-group">
                   <div className="input-group">
@@ -82,15 +133,15 @@ class Register extends React.Component {
                       </span>
                     </div>
                     <input
-                      className="form-control"
+                      className={`form-control ${this.errorClass(this.state.formErrorsPassword.password)}`}
                       placeholder="Password"
                       type="password"
                       name="password"
                       value={this.state.password}
                       onChange={this.onChange}
-                      pattern=".{6,30}"
                     />
                   </div>
+                  <FormErrorsPassword formErrorsPassword={this.state.formErrorsPassword} />
                 </div>
                 <div className="form-group">
                   <button type="submit" className="btn btn-dark btn-block">Register</button>

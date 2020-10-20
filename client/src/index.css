@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Acme');
 
+#root {
+  min-height: 100vh;
+  background: radial-gradient(90.97% 153.5% at 39.01% 6.16%, rgba(53, 24, 231, 0.3) 0%, rgba(12, 12, 12, 0.06) 91.15%), #0C0C0C;
+}
+
 .root-element {
   min-height: calc(100vh - 70px);
 }
@@ -175,7 +180,7 @@ p {
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: #FFAD1B;
 }
 
 /* Position and sizing of clickable cross button */

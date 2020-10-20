@@ -1,8 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FormErrorsEmail, FormErrorsPassword } from "./FormErrors";
 
-import { login } from '../../actions/auth'
+import { login } from '../../actions/auth';
 
 class Login extends React.Component {
   
@@ -10,7 +11,12 @@ class Login extends React.Component {
     super()
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      formErrors: {email: ''},
+      formErrorsPassword: { password: ''},
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
     }
   }
 
@@ -20,7 +26,44 @@ class Login extends React.Component {
     }
   }
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+  onChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value},
+                  () => { this.validateField(name, value) });
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let passwordFieldValidation = this.state.formErrorsPassword;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+  switch(fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : 'Email is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        passwordFieldValidation.password = passwordValid ? '': 'Password is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+                    formErrorsPassword: passwordFieldValidation,
+                    emailValid: emailValid,
+                    passwordValid: passwordValid
+                  }, this.validateForm);
+  }
+  validateForm() {
+    this.setState({formValid: this.state.emailValid &&
+                              this.state.passwordValid});
+  }
+  
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
+ }
 
   onSubmit = (e) => {
     e.preventDefault()
@@ -35,6 +78,8 @@ class Login extends React.Component {
             <article className="card-body">
               <h4 className="card-title text-center mb-4 mt-1">Log In</h4>
               <form onSubmit={this.onSubmit}>
+                <div className="panel panel-default">
+                </div>
                 <div className="form-group">
                   <div className="input-group">
                     <div className="input-group-prepend">
@@ -42,17 +87,14 @@ class Login extends React.Component {
                         <i className="fa fa-user"></i>
                       </span>
                     </div>
-                    <input
-                      className="form-control"
-                      placeholder="Email"
-                      type="email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      pattern=".{5,30}"
-                      required
-                    />
+                    <input type="email" required 
+                        className={`form-control ${this.errorClass(this.state.formErrors.email)}`} 
+                        name="email"
+                        placeholder="Email"
+                        value={this.state.email}
+                        onChange={this.onChange}  />
                   </div>
+                  <FormErrorsEmail formErrors={this.state.formErrors} />
                 </div>
                 <div className="form-group">
                   <div className="input-group">
@@ -62,19 +104,19 @@ class Login extends React.Component {
                       </span>
                     </div>
                     <input
-                      className="form-control"
+                      className={`form-control ${this.errorClass(this.state.formErrorsPassword.password)}`}
                       placeholder="Password"
                       type="password"
                       name="password"
                       value={this.state.password}
                       onChange={this.onChange}
-                      pattern=".{6,30}"
                       required
                     />
                   </div>
+                  <FormErrorsPassword formErrorsPassword={this.state.formErrorsPassword} />
                 </div>
                 <div className="form-group">
-                  <button type="submit" className="btn btn-dark btn-block">Login</button>
+                  <button type="submit" className="btn btn-dark btn-block" disabled={!this.state.formValid}>Login</button>
                 </div>
               </form>
             </article>
