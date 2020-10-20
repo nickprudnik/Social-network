@@ -1,12 +1,17 @@
 .main-footer {
     height: 50px;
+    color: rgba(243, 210, 123, 1);
+}
+
+.has-error {
+    border-color: #dc3545;
 }
 
 li {
     list-style-type: none;
 }
 
-.menu-item {
+.items {
     color: white;
     display: inline-block;
     text-decoration: none;
@@ -14,6 +19,18 @@ li {
     transition: color 0.2s;
 }
 
-.menu-item:hover {
+.items:hover {
     text-decoration: none;
+}
+
+.logo {
+    color: rgba(243, 210, 123, 1) !important;
+}
+
+.logo:hover {
+    color: rgba(243, 210, 123, 1) !important;
+}
+
+.info-message {
+    color: rgba(243, 210, 123, 1);
 }

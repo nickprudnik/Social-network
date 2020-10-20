@@ -20,23 +20,21 @@ class Header extends React.Component {
     let links;
     if (isAuthenticated) {
       links = (
-        <li>
           <ul>
-            <li><Link className="menu-item" to={"/user/" + user.id}>
+            <li className="menu-item"><Link className="items" to={"/user/" + user.id}>
               My Profile
             </Link></li>
-            <li><Link className="menu-item" href="#" onClick={this.onLogout}>Log Out</Link></li>
+            <li className="menu-item"><Link className="items" to="#" onClick={this.onLogout}>Log Out</Link></li>
           </ul>
-        </li>
       );
     } else {
       links = (
         <ul>
-            <li><Link className="menu-item" to="/login">
+            <li className="menu-item"><Link className="items" to="/login">
               <i className="fa fa-sign-in"></i>
               Log In
             </Link></li>
-            <li><Link className="menu-item" to="/register">
+            <li className="menu-item"><Link className="items" to="/register">
               <i className="fa fa-user-plus"></i>
               Register
             </Link></li>
@@ -48,7 +46,7 @@ class Header extends React.Component {
       <Menu {...this.props} className="navbar-nav">{links}</Menu>
       <nav className="navbar navbar-icon-top navbar-expand-lg navbar-light">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand logo" to="/">
             Itech-feed
           </Link>
           
