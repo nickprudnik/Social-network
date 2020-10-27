@@ -4,14 +4,13 @@ import jwtDecode from 'jwt-decode';
 import { SET_CURRENT_USER } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
-export const register = (userData, history) => () => {
+export const signUp = (userData, history) => () => {
   axios
     .post('/api/auth/register', userData)
-    .then(login(userData))
-    .then(() => history.push('/'))
-};
+    .then(() => history.push('/login'))
+}
 
-export const login = (userData) => (dispatch) => {
+export const login = (userData, history) => (dispatch) => {
   delete userData.name;
   axios
     .post('/api/auth/login', userData)
@@ -21,7 +20,8 @@ export const login = (userData) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwtDecode(token);
       dispatch(setCurrentUser(decoded));
-    });
+    })
+    .then(() => history.push('/'))
 };
 
 export const logout = () => (dispatch) => {

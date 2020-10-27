@@ -27,6 +27,12 @@ li {
     color: rgba(243, 210, 123, 1) !important;
 }
 
+.logo-wrapper {
+    position: absolute;
+    right: 36px;
+    top: 10px;
+}
+
 .logo:hover {
     color: rgba(243, 210, 123, 1) !important;
 }

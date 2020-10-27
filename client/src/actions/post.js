@@ -7,14 +7,27 @@ import {
   GET_POST,
   DELETE_POST,
   CLEAR_POSTS,
-  UPDATE_POST
+  UPDATE_POST,
+  EDIT_POST
 } from './types'
 
 export const create = (post) => (dispatch) => {
+  console.log("action create", post)
   axios
     .post('/api/posts', post)
     .then((res) => dispatch({
       type: ADD_POST,
+      payload: res.data
+    }))
+}
+
+export const edit = (postId, post) => (dispatch) => {
+  console.log("action", postId)
+  console.log("action", post)
+  axios
+    .post(`/api/posts/${postId}`, post)
+    .then((res) => dispatch({
+      type: EDIT_POST,
       payload: res.data
     }))
 }

@@ -1,0 +1,123 @@
+.form-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-weight: 100;
+    color: white;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(79, 98, 148);
+  }
+  
+  .form {
+    background: #0e101c;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .input-error {
+    color: #bf1650;
+  }
+  
+  .input-error::before {
+    display: inline;
+    content: "⚠ ";
+  }
+  
+  .input-form {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .label-form {
+    line-height: 2;
+    text-align: left;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+  }
+  
+  .submit-form[type="submit"],
+  .submit-form[type="submit"] {
+    background: #ec5990;
+    width: 100%;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 10px;
+  }
+  
+  .submit-form[type="submit"]:hover,
+  .submit-form[type="submit"]:hover {
+    background: #bf1650;
+  }
+  
+  .submit-form[type="submit"]:active,
+  .submit-form[type="button"]:active,
+  .submit-form[type="submit"]:active {
+    transition: 0.3s all;
+    transform: translateY(3px);
+    border: 1px solid transparent;
+    opacity: 0.8;
+  }
+  
+  .input-form:disabled {
+    opacity: 0.4;
+  }
+  
+  .submit-form[type="button"]:hover {
+    transition: 0.3s all;
+  }
+  
+  .submit-form[type="submit"],
+  .submit-form[type="button"],
+  .submit-form[type="submit"] {
+    -webkit-appearance: none;
+  }
+  
+  .App {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .submit-form[type="button"] {
+    display: block;
+    appearance: none;
+    background: #333;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 4px;
+  }
+  
+  hr {
+    margin-top: 30px;
+  }
+  
+  .submit-form {
+    display: block;
+    appearance: none;
+    margin-top: 40px;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 4px;
+  }
+  

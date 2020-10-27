@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./index.css"
 import { slide as Menu } from "react-burger-menu";
+import { handleOnClose } from "react-burger-menu";
 
 import { logout } from "../../actions/auth";
 
@@ -43,25 +44,20 @@ class Header extends React.Component {
     }
     return (
       <>
-      <Menu {...this.props} className="navbar-nav">{links}</Menu>
+      <Menu {...this.props} onClose={ handleOnClose } className="navbar-nav">{links}</Menu>
       <nav className="navbar navbar-icon-top navbar-expand-lg navbar-light">
         <div className="container">
-          <Link className="navbar-brand logo" to="/">
-            Itech-feed
-          </Link>
-          
+          <div className="logo-wrapper">
+            <Link className="navbar-brand logo" to="/">
+              Itech-feed
+            </Link>
+          </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               {isAuthenticated && (
-                <li className="nav-item">
-                  <Link className="nav-link" to="/feed">
-                    <i className="fa fa-rss"></i>
-                    Feed
-                  </Link>
-                </li>
+                <li className="nav-item"></li>
               )}
             </ul>
-            
           </div>
         </div>
       </nav>

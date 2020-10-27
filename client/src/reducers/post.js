@@ -6,7 +6,8 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST,
-  CLEAR_POSTS
+  CLEAR_POSTS,
+  EDIT_POST
 } from '../actions/types'
 
 const initialState = {
@@ -53,6 +54,11 @@ export default (state = initialState, action) => {
         posts: state.posts.map((p) => p._id === action.payload._id ? action.payload : p)
       }
     case UPDATE_POST:
+      return {
+        ...state,
+        post: action.payload
+      }
+    case EDIT_POST:
       return {
         ...state,
         post: action.payload

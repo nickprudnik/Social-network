@@ -13,7 +13,7 @@ class AllPosts extends React.Component {
       <div className="row mt-6">
         <div className="col-md-10 mx-auto">
           {auth.isAuthenticated && <PostForm />}
-          <Posts queryParams={{}} />
+          <Posts loading="lazy" queryParams={{}} />
         </div>
       </div>
     )
