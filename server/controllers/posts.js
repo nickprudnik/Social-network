@@ -16,7 +16,6 @@ router.get('/', async (ctx) => {
   const { query } = ctx
   const q = 'users' in query ?
     { user: { $in: query.users.split(',') } } : query
-  ctx.set('x-total-count', await Post.countDocuments(q))
   ctx.body = await Post
     .find(q)
     .sort({ createdDate: -1 })
@@ -32,13 +31,14 @@ router.get('/:id', async (ctx) => {
 })
 
 router.put('/', passport.authenticate('jwt', { session: false }), async (ctx) => {
-  const { _id, body } = ctx.request.body
-  const user = ctx.state.user._id
-  ctx.body = await Post.findOneAndUpdate(
-    { _id, user },
-    { $set: { body } },
-    { new: true }
-  )
+  const post = await Post.findById(ctx.request.body._id);
+  if (!post) {
+    ctx.throw(404, 'Post has not been found')
+  };
+
+  const { body } = ctx.request.body;
+  post.body = body;
+  ctx.body = await post.save();
 })
 
 router.delete('/:_id', passport.authenticate('jwt', { session: false }), async (ctx) => {

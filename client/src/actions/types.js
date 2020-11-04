@@ -17,3 +17,4 @@ export const DELETE_SUBSCRIPTION = 'DELETE_SUBSCRIPTION'
 
 export const USER_LOADING = 'USER_LOADING'
 export const GET_USER = 'GET_USER'
+export const UPDATE_USER = 'UPDATE_USER'

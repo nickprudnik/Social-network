@@ -7,7 +7,8 @@ import setAuthToken from '../utils/setAuthToken';
 export const signUp = (userData, history) => () => {
   axios
     .post('/api/auth/register', userData)
-    .then(() => history.push('/login'))
+    .then(login(userData, history))
+    .then(() => history.push('/'))
 }
 
 export const login = (userData, history) => (dispatch) => {

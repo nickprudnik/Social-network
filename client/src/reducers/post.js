@@ -6,15 +6,15 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST,
-  CLEAR_POSTS,
-  EDIT_POST
+  CLEAR_POSTS
 } from '../actions/types'
 
 const initialState = {
   posts: [],
   totalCount: 0,
   post: null,
-  isLoading: false
+  isLoading: false,
+  postId: 0
 }
 
 export default (state = initialState, action) => {
@@ -56,12 +56,7 @@ export default (state = initialState, action) => {
     case UPDATE_POST:
       return {
         ...state,
-        post: action.payload
-      }
-    case EDIT_POST:
-      return {
-        ...state,
-        post: action.payload
+        post: [action.payload, ...state.posts]
       }
     case DELETE_POST:
       return {

@@ -9,15 +9,12 @@ import { edit } from '../../../actions/post'
 
 import Like from './Like'
 import ProfileImage from '../ProfileImage'
+import "./post.css"
 
 class Post extends React.Component {
   constructor() {
     super()
     this.state = { isEdit: false }
-  }
-
-  componentDidMount() {
-    this.refs.body.innerHTML = this.props.post.body
   }
 
   onDelete = () => this.props.remove(this.props.post._id)
@@ -28,9 +25,12 @@ class Post extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.props.edit(this.props.post._id, { body: this.props.post.body } )
-    console.log("post", this.props.post._id)
-    console.log("post", this.props.post.body)
+    this.props.edit(this.props.post)
+    this.setState({ isEdit: false })
+  }
+
+  onCancelEdit = (e) => {
+    e.preventDefault()
     this.setState({ isEdit: false })
   }
 
@@ -64,11 +64,10 @@ class Post extends React.Component {
             )}
           </div>
         </div>
-        {!this.state.isEdit && <div className="card-body" ref="body"></div>}
+        {!this.state.isEdit && <div className="card-body">{this.props.post.body.replace(/<[^>]+>/g, '')}</div>}
         {this.state.isEdit && <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <Quill
-                placeholder="What's up?"
                 theme="snow"
                 modules={{
                   toolbar: [
@@ -77,13 +76,15 @@ class Post extends React.Component {
                     ['clean']
                   ]
                 }}
+                autoFocus
                 defaultValue={this.props.post.body}
                 value={this.props.post.body}
                 onChange={this.onChangeBody}
               />
             </div>
             <div className="btn-group float-right">
-              <button type="submit" className="btn btn-dark">Save</button>
+              <button onClick={this.onCancelEdit} className="btn btn-outline-secondary submit-edit">Cancel</button>
+              <button type="submit" className="btn btn-outline-success submit-edit">Save</button>
             </div>
           </form>}
         <div className="card-footer">

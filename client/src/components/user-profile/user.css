@@ -1,0 +1,49 @@
+.name-container {
+    color: white;
+}
+
+.inline-text_copy--active,
+.inline-text_input--active {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 0;
+  background: none;
+  border: none;
+  border-bottom: 1px dashed #666666;
+}
+
+.inline-text_copy--active {
+  cursor: pointer;
+}
+
+.inline-text_copy--hidden,
+.inline-text_input--hidden {
+  display: none;
+}
+
+.inline-text_input--active {
+  border-bottom: 1px solid #666666;
+  text-align: left;
+}
+
+.name-input {
+  margin-top: 25px;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+}
+
+.buttons-wrapper {
+  margin-top: 20px;
+}
+
+.registered {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.registered-date {
+  color: white;
+}

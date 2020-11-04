@@ -9,8 +9,6 @@ import { getAll } from '../../actions/post';
 import Post from './Post';
 import Loader from './Loader';
 
-const LIMIT = 10;
-
 class Posts extends React.Component {
 
   constructor() {
