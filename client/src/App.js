@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import jwtDecode from 'jwt-decode'
+import LazyLoad from 'react-lazyload';
 
 import store from './store'
 import setAuthToken from './utils/setAuthToken'
@@ -38,18 +39,21 @@ function App() {
         <>
           <div id="parent-root" className="root-element">
           <Header pageWrapId={"page-wrap"} outerContainerId={"parent-root"}/>
-            <div className="container">
-            <div className="page-wrap">
-            <Route path="/register" component={Register} />
-              <Route path="/login" component={Login} />
-              <Route exact path="/" component={AllPosts} />
-              <Route path="/post/:id" component={SinglePost} />
-              <Route path="/user/:id" component={UserProfile} />
-              <Switch>
-                <PrivateRoute path="/feed" component={Feed} />
-              </Switch>
-              <Route path="/404" component={NotFound} />
-            </div>
+            <div className="container main">
+            <LazyLoad height={200} once offset={100}>
+              <div className="page-wrap">
+              <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
+                <Route exact path="/" component={AllPosts} />
+                <Route path="/post/:id" component={SinglePost} />
+                <Route path="/user/:id" component={UserProfile} />
+                <Switch>
+                  <PrivateRoute path="/feed" component={Feed} />
+                </Switch>
+                <Route path="/404" component={NotFound} />
+              </div>
+            </LazyLoad>
+            
             </div>
           </div>
           <Footer />

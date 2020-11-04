@@ -2,19 +2,37 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import Quill from 'react-quill'
 
 import { remove } from '../../../actions/post'
+import { edit } from '../../../actions/post'
 
 import Like from './Like'
 import ProfileImage from '../ProfileImage'
 
 class Post extends React.Component {
+  constructor() {
+    super()
+    this.state = { isEdit: false }
+  }
 
   componentDidMount() {
     this.refs.body.innerHTML = this.props.post.body
   }
 
   onDelete = () => this.props.remove(this.props.post._id)
+
+  onEdit = () => this.setState({ isEdit: true })
+
+  onChangeBody = (data) => this.props.post.body = data
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    this.props.edit(this.props.post._id, { body: this.props.post.body } )
+    console.log("post", this.props.post._id)
+    console.log("post", this.props.post.body)
+    this.setState({ isEdit: false })
+  }
 
   render() {
     const { post, auth, TYPE } = this.props
@@ -40,12 +58,34 @@ class Post extends React.Component {
                 <button className="btn btn-link dropdown-toggle" type="button" id="drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="drop">
                   <a className="dropdown-item" role="button" onClick={this.onDelete}>Remove</a>
+                  <a className="dropdown-item" role="button" onClick={this.onEdit}>Edit</a>
                 </div>
               </div>
             )}
           </div>
         </div>
-        <div className="card-body" ref="body"></div>
+        {!this.state.isEdit && <div className="card-body" ref="body"></div>}
+        {this.state.isEdit && <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <Quill
+                placeholder="What's up?"
+                theme="snow"
+                modules={{
+                  toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                  ]
+                }}
+                defaultValue={this.props.post.body}
+                value={this.props.post.body}
+                onChange={this.onChangeBody}
+              />
+            </div>
+            <div className="btn-group float-right">
+              <button type="submit" className="btn btn-dark">Save</button>
+            </div>
+          </form>}
         <div className="card-footer">
           <Like postId={post._id} likes={post.likes} TYPE={TYPE} />
           <Link to={'/post/' + post._id} className="card-link">
@@ -59,6 +99,7 @@ class Post extends React.Component {
 
 Post.propTypes = {
   remove: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   TYPE: PropTypes.string.isRequired
@@ -66,4 +107,4 @@ Post.propTypes = {
 
 const mapStateToProps = (state) => ({ auth: state.auth })
 
-export default connect(mapStateToProps, { remove })(Post)
+export default connect(mapStateToProps, { remove, edit })(Post)

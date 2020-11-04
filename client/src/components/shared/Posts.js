@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Pagination from "react-js-pagination";
 import "./../layout/index.css";
 
 import { UPDATE_POSTS } from '../../actions/types';
@@ -20,23 +19,13 @@ class Posts extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getAll(this.getQueryParams())
+    this.props.getAll()
   }
 
   onPageChange = (activePage) => {
     this.setState({ activePage }, () => {
       this.props.getAll(this.getQueryParams())
     })
-  }
-
-  getQueryParams() {
-    return Object.assign(
-      {
-        skip: (this.state.activePage - 1) * LIMIT,
-        limit: LIMIT
-      },
-      this.props.queryParams
-    )
   }
 
   render() {
@@ -50,16 +39,6 @@ class Posts extends React.Component {
           </div>
         )}
         {posts.map((p) => <Post post={p} key={p._id} TYPE={UPDATE_POSTS} />)}
-        {!isLoading && totalCount > posts.length && (
-          <Pagination
-            activePage={this.state.activePage}
-            itemsCountPerPage={LIMIT}
-            totalItemsCount={totalCount}
-            onChange={this.onPageChange}
-            itemClass="page-item"
-            linkClass="page-link"
-          />
-        )}
       </>
     )
   }

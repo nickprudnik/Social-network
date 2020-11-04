@@ -14,17 +14,12 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (ctx) =
 
 router.get('/', async (ctx) => {
   const { query } = ctx
-  const { skip, limit } = query
-  delete query.skip
-  delete query.limit
   const q = 'users' in query ?
     { user: { $in: query.users.split(',') } } : query
   ctx.set('x-total-count', await Post.countDocuments(q))
   ctx.body = await Post
     .find(q)
     .sort({ createdDate: -1 })
-    .skip(+skip)
-    .limit(+limit)
 })
 
 router.get('/:id', async (ctx) => {
