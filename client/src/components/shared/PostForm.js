@@ -31,7 +31,8 @@ class PostForm extends React.Component {
                 theme="snow"
                 modules={{
                   toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
+                    [{size: []}],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                     ['link', 'image', 'video'],
                     ['clean']
                   ]

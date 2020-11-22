@@ -4,7 +4,7 @@ const config = require('./config')
 
 module.exports = () => {
   mongoose
-    .connect(config.mongoUri, { useNewUrlParser: true })
+    .connect(config.mongoUri, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
     .then((() => console.log('MongoDB has been connected')))
     .catch((e) => console.log(e))
 }

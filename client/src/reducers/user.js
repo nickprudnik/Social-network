@@ -1,4 +1,4 @@
-import { USER_LOADING, GET_USER } from '../actions/types'
+import { USER_LOADING, GET_USER, UPDATE_USER } from '../actions/types'
 
 const initialState = {
   user: null,
@@ -18,6 +18,11 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload,
         isLoading: false
+      }
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload
       }
     default:
       return state

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { ErrorMessage } from '@hookform/error-message';
 import './auth.css';
+import M from 'materialize-css';
 
 import { login } from '../../actions/auth';
 
@@ -12,13 +13,16 @@ function LoginForm(props) {
   const dispatch = useDispatch();
 
   const onSubmit = data => {
-    dispatch(login(data, props.history))
+    dispatch(login(data, props.history));
+    if (props.auth.error) {
+      M.toast({html: props.auth.error.error, classes: 'rounded'});
+    };
   };
 
   return (
       <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>
         <label className="label-form">Login</label>
-        <input className="input-form" name="email" defaultValue={props.email} ref={register({
+        <input className="input-form" name="email" placeholder="Email" defaultValue={props.email} ref={register({
           required: "Email is required.",
           pattern: {
             value: /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/,
@@ -36,7 +40,7 @@ function LoginForm(props) {
         />
 
         <label className="label-form">Password</label>
-        <input className="input-form" cc-csc="true" name="password" type="password" defaultValue={props.password}
+        <input className="input-form" cc-csc="true" name="password" placeholder="Password" type="password" defaultValue={props.password}
           ref={register({ 
             required: "Password is required.",
             pattern: {
@@ -59,5 +63,9 @@ function LoginForm(props) {
   );
 }
 
-const Login = connect()(LoginForm);
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const Login = connect(mapStateToProps, { login })(LoginForm);
 export default Login;

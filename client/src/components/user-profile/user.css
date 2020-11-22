@@ -1,0 +1,59 @@
+.name-container {
+    color: white;
+}
+
+.inline-text_copy--active,
+.inline-text_input--active {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 0;
+  background: none;
+  border: none;
+  border-bottom: 1px dashed #666666;
+}
+
+.inline-text_copy--active {
+  cursor: pointer;
+}
+
+.inline-text_copy--hidden,
+.inline-text_input--hidden {
+  display: none;
+}
+
+.inline-text_input--active {
+  border-bottom: 1px solid #666666;
+  text-align: left;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+}
+
+.buttons-wrapper {
+  margin-top: 20px;
+}
+
+.registered {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.registered-date {
+  color: white;
+}
+
+.upload-image {
+  flex-direction: column;
+  margin: 10px auto 20px auto;
+}
+
+.image-container {
+  
+}
+
+.user-image {
+  width: 150px;
+  height: 150px;
+}

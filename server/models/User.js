@@ -17,9 +17,30 @@ const userSchema = new Schema({
     required: true,
     private: true
   },
+  dateOfBirth: {
+    type: Date,
+  },
   createdDate: {
     type: Date,
     default: Date.now
+  },
+  website: {
+    type: String
+  },
+  bio: {
+    type: String
+  },
+  phoneNumber: {
+    type: Number 
+  },
+  gender: {
+    type: String
+  },
+  userImage: {
+    type: String
+  },
+  avatarUrl: {
+    type: String
   }
 })
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { ErrorMessage } from '@hookform/error-message';
+import M from 'materialize-css';
 import './auth.css';
 
 import { signUp } from '../../actions/auth';
@@ -12,13 +13,16 @@ function RegisterForm(props) {
   const dispatch = useDispatch();
 
   const onSubmit = data => {
-    dispatch(signUp(data, props.history))
+    dispatch(signUp(data, props.history));
+    if (props.auth.error) {
+      M.toast({html: props.auth.error.error, classes: 'rounded'});
+    };
   };
 
   return (
     <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>
       <label className="label-form">Name</label>
-      <input className="input-form" name="name" defaultValue={props.name} ref={register({
+      <input className="input-form" name="name" placeholder="Name" defaultValue={props.name} ref={register({
         required: "Name is required.",
         pattern: {
             value: /^[A-Za-z]+$/,
@@ -36,7 +40,7 @@ function RegisterForm(props) {
       />
 
       <label className="label-form">Login</label>
-      <input className="input-form" name="email" defaultValue={props.email} ref={register({
+      <input className="input-form" name="email" placeholder="Email" defaultValue={props.email} ref={register({
           required: "Email is required.",
           pattern: {
             value: /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/,
@@ -54,7 +58,7 @@ function RegisterForm(props) {
       />
       
       <label className="label-form">Password</label>
-      <input className="input-form" cc-csc="true" name="password" type="password" defaultValue={props.password} ref={register({
+      <input className="input-form" cc-csc="true" name="password" placeholder="Password" type="password" defaultValue={props.password} ref={register({
           required: "Password is required.",
           pattern: {
             value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
@@ -76,5 +80,9 @@ function RegisterForm(props) {
   );
 }
 
-const Register = connect()(RegisterForm);
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const Register = connect(mapStateToProps, { signUp })(RegisterForm);
 export default Register;
