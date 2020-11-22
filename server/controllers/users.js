@@ -25,8 +25,13 @@ router.put('/', async (ctx) => {
   user.phoneNumber = ctx.request.body.phoneNumber;
   user.gender= ctx.request.body.gender;
   user.userImage = ctx.request.body.userImage;
+  user.avatarUrl = ctx.request.body.avatarUrl;
   ctx.body = await user.save();
   
+})
+
+router.get('/', (req, res)=> {
+  res.redirect('http://localhost:3000/');
 })
 
 module.exports = router.routes()

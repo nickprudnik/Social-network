@@ -27,10 +27,6 @@
   text-align: left;
 }
 
-.name-input {
-  margin-top: 25px;
-}
-
 .input-wrapper {
   margin-bottom: 20px;
 }
@@ -46,4 +42,18 @@
 
 .registered-date {
   color: white;
+}
+
+.upload-image {
+  flex-direction: column;
+  margin: 10px auto 20px auto;
+}
+
+.image-container {
+  
+}
+
+.user-image {
+  width: 150px;
+  height: 150px;
 }

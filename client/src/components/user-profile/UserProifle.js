@@ -7,7 +7,7 @@ import { getUserById, editProfile } from '../../actions/user';
 import Loader from '../shared/Loader';
 import ProfileImage from '../shared/ProfileImage';
 import Subscription from './Subscription';
-import "./user.css"
+import "./user.css";
 
 class UserProfile extends Component {
   constructor() {
@@ -21,25 +21,37 @@ class UserProfile extends Component {
         website: "",
         bio: "",
         phoneNumber: "",
-        gender: ""
+        gender: "",
+        avatarUrl: "",
       }
     }
-  }
+  };
 
   componentDidMount() {
     this.props.getUserById(this.props.match.params.id)
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (this.props.user.user && prevProps.user.user !== this.props.user.user) {
       this.setState({ user: this.props.user.user })
     }
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.user.isLoading && nextProps.user.user === null) {
       this.props.history.push('/404')
     }
+  };
+
+  onChangeHandler = event=>{
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    setTimeout(() => {
+      const { user } = this.state;
+      user.avatarUrl = reader.result;
+      this.setState({ user, isChanges: true });
+    }, 1000)
   }
 
   onBodyChange = (data) => {
@@ -49,11 +61,17 @@ class UserProfile extends Component {
     this.setState({ user, isChanges: true });
   }
 
+  onRadioChange = (data) => {
+    const { user } = this.state;
+    user.gender = data.target.value;
+    this.setState({ user, isChanges: true });
+  };
+
   onSubmit = (e) => {
-    e.preventDefault()
-    this.props.editProfile( this.state.user )
-    this.setState({ isChanges: false })
-  }
+    e.preventDefault();
+    this.props.editProfile( this.state.user );
+    this.setState({ isChanges: false });
+  };
 
   render() {
     const { user: { user, isLoading }, auth } = this.props
@@ -61,11 +79,18 @@ class UserProfile extends Component {
       <>
         <div className="row mt-5">
           <div className="col-md-12">
-            <div className="row">
                 <form onSubmit={this.onSubmit}>
-                <div className="form-group row">
-                      <label className="col-sm-2 col-form-label registered-date"><ProfileImage user={user} /></label>
-                      <div className="col-sm-10 input-wrapper">
+                  <div className="upload-image">
+                    <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} /></div>
+                      {auth.user.id === user._id && (
+                          <div>
+                            <input type="file" id="avatarUrl" onChange={this.onChangeHandler}></input>
+                          </div>
+                      )}
+                  </div>
+                  <div className="row">
+                    <label className="col-sm-2 col-form-label registered-date">Name</label>
+                    <div className="col-sm-10 input-wrapper">
                       <input
                         className="form-control name-input"
                         placeholder="Name"
@@ -73,8 +98,10 @@ class UserProfile extends Component {
                         value={this.state.user.name}
                         onChange={this.onBodyChange}
                       />
-                      </div>
-                      <label className="col-sm-2 col-form-label registered-date">Date Of Birth</label>
+                    </div>
+                  </div>
+                  <div className="row">
+                  <label className="col-sm-2 col-form-label registered-date">Date Of Birth</label>
                       <div className="col-sm-10 input-wrapper">
                         <input
                           className="form-control"
@@ -85,7 +112,9 @@ class UserProfile extends Component {
                           onChange={this.onBodyChange}
                         />
                       </div>
-                      <label className="col-sm-2 col-form-label registered-date">Website</label>
+                  </div>
+                  <div className="row">
+                  <label className="col-sm-2 col-form-label registered-date">Website</label>
                       <div className="col-sm-10 input-wrapper">
                         <input
                           className="form-control"
@@ -95,7 +124,12 @@ class UserProfile extends Component {
                           onChange={this.onBodyChange}
                         />
                       </div>
-                      <label className="col-sm-2 col-form-label registered-date">Bio</label>
+                  </div>
+                  <div className="row">
+
+                  </div>
+                  <div className="row">
+                  <label className="col-sm-2 col-form-label registered-date">Bio</label>
                       <div className="col-sm-10 input-wrapper">
                         <textarea 
                           className="form-control"
@@ -105,7 +139,9 @@ class UserProfile extends Component {
                           onChange={this.onBodyChange}
                         />
                       </div>
-                      <label className="col-sm-2 col-form-label registered-date">Phone Number</label>
+                  </div>
+                  <div className="row">
+                  <label className="col-sm-2 col-form-label registered-date">Phone Number</label>
                       <div className="col-sm-10 input-wrapper">
                         <input
                           className="form-control"
@@ -116,19 +152,27 @@ class UserProfile extends Component {
                           onChange={this.onBodyChange}
                         />
                       </div>
-                      <label className="col-sm-2 col-form-label registered-date">Gender</label>
-                      <div className="col-sm-10 input-wrapper">
-                        <input
-                          className="form-control"
-                          placeholder="Gender"
-                          id="gender"
-                          value={this.state.user.gender}
-                          onChange={this.onBodyChange}
-                        />
+                  </div>
+                  <div className="row">
+                    <label className="col-sm-2 col-form-label registered-date">Gender</label>
+                      <div className="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="genderMale" name="gender" className="custom-control-input" 
+                          value="Male" onChange={this.onRadioChange} checked={this.state.user.gender === "Male"}/>
+                        <label className="custom-control-label registered-date" htmlFor="genderMale">Male</label>
                       </div>
+                      <div className="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="genderFemale" name="gender" className="custom-control-input" 
+                          value="Female" onChange={this.onRadioChange} checked={this.state.user.gender === "Female"}/>
+                        <label className="custom-control-label registered-date" htmlFor="genderFemale">Female</label>
+                      </div>
+                      <div className="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="genderOther" name="gender" className="custom-control-input" 
+                          value="Other" onChange={this.onRadioChange} checked={this.state.user.gender === "Other"}/>
+                        <label className="custom-control-label registered-date" htmlFor="genderOther">Other</label>
+                      </div>
+                  </div>
                     {this.state.isChanges && <div className="col-md-4 mx-auto buttons-wrapper"><button type="submit" className="btn btn-outline-success submit-edit">Save</button>
                     </div>}
-                    </div>
                   </form>
                 <div className="text-center registered">
                   <p className="registered-date">
@@ -136,7 +180,6 @@ class UserProfile extends Component {
                     {new Date(user.createdDate).toDateString()}
                   </p>
                 </div>
-            </div>
           </div>
         </div>
         {!(auth.user.id === user._id) && (

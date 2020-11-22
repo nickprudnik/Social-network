@@ -1,9 +1,12 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
+export const CREATE_LOGIN_ERROR = 'CREATE_ARTICLE_ERROR'
+export const CREATE_REGISTER_ERROR = 'CREATE_REGISTER_ERROR'
 
 export const POST_LOADING = 'POST_LOADING'
 export const ADD_POST = 'ADD_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const UPDATE_POSTS = 'UPDATE_POSTS'
+export const UPDATE_USER_POST = 'UPDATE_USER_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const GET_POSTS = 'GET_POSTS'
 export const GET_POST = 'GET_POST'

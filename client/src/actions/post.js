@@ -7,7 +7,8 @@ import {
   GET_POST,
   DELETE_POST,
   CLEAR_POSTS,
-  UPDATE_POST
+  UPDATE_POST,
+  UPDATE_USER_POST
 } from './types'
 
 export const create = (post) => (dispatch) => {
@@ -23,7 +24,7 @@ export const edit = (post) => (dispatch) => {
   axios
     .put(`/api/posts`, post)
     .then((res) => dispatch({
-      type: UPDATE_POST,
+      type: UPDATE_USER_POST,
       payload: res.data
     }))
 }

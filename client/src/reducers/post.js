@@ -3,6 +3,7 @@ import {
   ADD_POST,
   UPDATE_POST,
   UPDATE_POSTS,
+  UPDATE_USER_POST,
   GET_POSTS,
   GET_POST,
   DELETE_POST,
@@ -54,6 +55,11 @@ export default (state = initialState, action) => {
         posts: state.posts.map((p) => p._id === action.payload._id ? action.payload : p)
       }
     case UPDATE_POST:
+      return {
+        ...state,
+        post: action.payload
+      }
+    case UPDATE_USER_POST:
       return {
         ...state,
         post: [action.payload, ...state.posts]

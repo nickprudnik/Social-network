@@ -1,3 +1,5 @@
+/* @import "~materialize-css/dist/css/materialize.min.css"; */
+
 .form-wrapper {
     max-width: 500px;
     margin: 0 auto;
@@ -120,4 +122,87 @@
     padding: 10px 20px;
     border-radius: 4px;
   }
-  
+/* 
+  $small-screen-up: 541px;
+$medium-screen-up: 769px;
+$large-screen-up: 1025px;
+$small-screen: 540px;
+$medium-screen: 768px;
+$large-screen: 1024px;
+
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})";
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})";
+$medium-and-down: "only screen and (max-width : #{$medium-screen})";
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})";
+
+$toast-height: 48px !default;
+$toast-width: 540px;
+$toast-color: #eeeeee !default;
+$toast-text-color: #212121 !default;
+
+$secondary-color: #00e676; */
+
+#toast-container {
+  display:block;
+  position: fixed;
+  z-index: 10000;
+  top: 0 !important; 
+
+  @media only screen and (max-width : 540px) {
+    min-width: 100%;
+    bottom: 0;
+  }
+
+  @media only screen and (min-width : 540px) and (max-width : 768px) {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(540px / -2);
+  }
+
+  @media only screen and (min-width : 769px) {
+    left: 48px / 3 * 2;
+    bottom: 48px / 3 * 2;
+    max-width: 90%;
+  }
+}
+
+.toast {
+  border-radius: 2px;
+  top: 35px;
+  width: auto;
+  clear: both;
+  margin-top: 10px;
+  position: relative;
+  max-width:100%;
+  height: auto;
+  min-height: 48px;
+  line-height: 1.5em;
+  word-break: keep-all;
+  background-color: #db2727;
+  padding: 10px 25px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #fffefe;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media only screen and (max-width : 540px) {
+    width: 100%;
+    border-radius: 0;
+  }
+  @media only screen and (min-width : 540px) and (max-width : 768px) {
+    width: 540px;
+  }
+  @media only screen and (min-width : 769px) {
+    float: left;
+  }
+
+}
+
+.toast::before {
+  display: inline;
+  content: " ⚠ ";
+}

@@ -19,6 +19,8 @@ import SinglePost from './components/single-post/SinglePost'
 import UserProfile from './components/user-profile/UserProifle'
 import Feed from './components/feed/Feed'
 import NotFound from './components/not-found/NotFound'
+import Join from './components/Join/Join';
+import Chat from './components/Chat/Chat';
 
 if (localStorage.access_token) {
   const { access_token } = localStorage
@@ -47,6 +49,8 @@ function App() {
                 <Route exact path="/" component={AllPosts} />
                 <Route path="/post/:id" component={SinglePost} />
                 <Route path="/user/:id" component={UserProfile} />
+                <Route path="/join" exact component={Join} />
+                <Route path="/chat" exact component={Chat} />
                 <Switch>
                   <PrivateRoute path="/feed" component={Feed} />
                 </Switch>

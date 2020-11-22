@@ -38,6 +38,9 @@ const userSchema = new Schema({
   },
   userImage: {
     type: String
+  },
+  avatarUrl: {
+    type: String
   }
 })
 

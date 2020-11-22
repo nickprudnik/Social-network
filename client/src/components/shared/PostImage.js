@@ -6,7 +6,7 @@ export default ({ user, width = '' }) => (
     {user.avatarUrl && 
         <img
             src={user.avatarUrl}
-            className="rounded-circle user-image"
+            className="rounded-circle post-image"
             alt={user.name}
             width={width}
         />

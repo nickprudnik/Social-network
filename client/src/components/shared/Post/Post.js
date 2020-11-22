@@ -8,7 +8,7 @@ import { remove } from '../../../actions/post'
 import { edit } from '../../../actions/post'
 
 import Like from './Like'
-import ProfileImage from '../ProfileImage'
+import PostImage from '../PostImage'
 import "./post.css"
 
 class Post extends React.Component {
@@ -43,7 +43,7 @@ class Post extends React.Component {
             <div className="d-flex justify-content-between align-items-center">
               <div className="mr-2">
                 <Link to={'/user/' + post.user._id}>
-                  <ProfileImage user={post.user} width="50" />
+                  <PostImage user={post.user} width="50" />
                 </Link>
               </div>
               <div className="ml-2">

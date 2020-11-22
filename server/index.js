@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const app = require('./app')
+const server = require('./app')
 const config = require('./lib/config')
 
-app(() => console.log(`Server has been started ${config.port}`))
+server(() => console.log(`Server has been started ${config.port}`))

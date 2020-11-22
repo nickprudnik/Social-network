@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { ErrorMessage } from '@hookform/error-message';
+import M from 'materialize-css';
 import './auth.css';
 
 import { signUp } from '../../actions/auth';
@@ -12,7 +13,10 @@ function RegisterForm(props) {
   const dispatch = useDispatch();
 
   const onSubmit = data => {
-    dispatch(signUp(data, props.history))
+    dispatch(signUp(data, props.history));
+    if (props.auth.error) {
+      M.toast({html: props.auth.error.error, classes: 'rounded'});
+    };
   };
 
   return (
@@ -76,5 +80,9 @@ function RegisterForm(props) {
   );
 }
 
-const Register = connect()(RegisterForm);
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const Register = connect(mapStateToProps, { signUp })(RegisterForm);
 export default Register;

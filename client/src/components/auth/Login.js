@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { ErrorMessage } from '@hookform/error-message';
 import './auth.css';
+import M from 'materialize-css';
 
 import { login } from '../../actions/auth';
 
@@ -12,7 +13,10 @@ function LoginForm(props) {
   const dispatch = useDispatch();
 
   const onSubmit = data => {
-    dispatch(login(data, props.history))
+    dispatch(login(data, props.history));
+    if (props.auth.error) {
+      M.toast({html: props.auth.error.error, classes: 'rounded'});
+    };
   };
 
   return (
@@ -59,5 +63,9 @@ function LoginForm(props) {
   );
 }
 
-const Login = connect()(LoginForm);
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const Login = connect(mapStateToProps, { login })(LoginForm);
 export default Login;
