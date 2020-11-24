@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { removeComment } from '../../actions/post'
 
-import ProfileImage from '../shared/ProfileImage'
+import PostImage from '../shared/PostImage'
 
 class Comment extends React.Component {
 
@@ -26,7 +26,7 @@ class Comment extends React.Component {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="mr-2">
-                    <ProfileImage user={comment.user} width="50" />
+                    <PostImage user={comment.user} width="50" />
                   </div>
                   <div className="ml-2">
                     <div className="h5 m-0">{comment.user.name}</div>
@@ -42,7 +42,7 @@ class Comment extends React.Component {
                 <div className="dropdown">
                   <button className="btn btn-link dropdown-toggle" type="button" id="drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="drop">
-                    <a className="dropdown-item" role="button" onClick={this.onDelete}>Remove</a>
+                    <button className="dropdown-item" type="button" onClick={this.onDelete}>Remove</button>
                   </div>
                 </div>
               )}

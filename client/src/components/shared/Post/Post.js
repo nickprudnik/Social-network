@@ -57,8 +57,8 @@ class Post extends React.Component {
               <div className="dropdown">
                 <button className="btn btn-link dropdown-toggle" type="button" id="drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="drop">
-                  <a className="dropdown-item" role="button" onClick={this.onDelete}>Remove</a>
-                  <a className="dropdown-item" role="button" onClick={this.onEdit}>Edit</a>
+                  <button className="dropdown-item" type="button" onClick={this.onDelete}>Remove</button>
+                  <button className="dropdown-item" type="button" onClick={this.onEdit}>Edit</button>
                 </div>
               </div>
             )}

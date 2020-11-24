@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { createLike, removeLike } from '../../../actions/post'
+import './post.css'
 
 class Like extends React.Component {
 
@@ -22,12 +23,9 @@ class Like extends React.Component {
   render() {
     const { likes } = this.props
     return (
-      <a
-        href="#" role="button"
-        className="card-link" onClick={this.onLikeClick}
-      >
+      <button type="button" className="card-link like-button" onClick={this.onLikeClick} >
         <i className="fa fa-heart"></i> {likes.length}
-      </a>
+      </button>
     )
   }
 }

@@ -37,7 +37,7 @@ class UserProfile extends Component {
     }
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!nextProps.user.isLoading && nextProps.user.user === null) {
       this.props.history.push('/404')
     }

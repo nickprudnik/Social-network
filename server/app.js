@@ -16,23 +16,19 @@ handlers.forEach((h) => app.use(h));
 app.use(controllers.routes());
 app.use(controllers.allowedMethods());
 
-const changeStream = Post.watch();
+// POSTS - Change
+io.on('connection', function(socket){
+  const changeStream = Post.watch();
+  
+  changeStream.on('change', next => {
+    console.log("Collection Post has changed")
+    
+    socket.emit('RefreshPostsPage', "Hi posts");
+  });
+});
+
 
 io.on('connect', (socket) => {
-  console.log("socket connected");
-    // POSTS - Change
-  changeStream.on('change', function(change) {
-    console.log('COLLECTION CHANGED');
-
-    Post.find({}, (err, data) => {
-        if (err) throw err;
-
-        if (data) {
-            // RESEND ALL POSTS TO ALL USERS
-            socket.emit('users', data);
-        }
-    });
-  });
   socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 

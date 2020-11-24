@@ -40,3 +40,9 @@ li {
 .info-message {
     color: rgba(243, 210, 123, 1);
 }
+
+.update-button {
+    width: inherit;
+    height: 50px;
+    border-radius: 25px;
+}
