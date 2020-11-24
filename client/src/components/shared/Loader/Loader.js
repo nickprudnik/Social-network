@@ -3,7 +3,7 @@ import React from 'react'
 import './Loader.css'
 
 export default () => (
-  <div id="fountainG" className="mt-4">
+  <div id="fountainG" className="mb-4">
     <div id="fountainG_1" className="fountainG"></div>
     <div id="fountainG_2" className="fountainG"></div>
     <div id="fountainG_3" className="fountainG"></div>

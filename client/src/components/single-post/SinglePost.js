@@ -16,7 +16,7 @@ class SinglePost extends React.Component {
     this.props.getPostById(this.props.match.params.id)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!nextProps.post.isLoading && nextProps.post.post === null) {
       this.props.history.push('/404')
     }
@@ -27,7 +27,7 @@ class SinglePost extends React.Component {
     console.log(post)
     return !post.isLoading && post.post !== null ? (
       <div className="row mt-5">
-        <div className="col-md-6 mx-auto">
+        <div className="col-md-12 mx-auto">
           <Post post={post.post} TYPE={UPDATE_POST} />
           <div className="col-md-12 mx-auto">
             {auth.isAuthenticated && <CommentForm postId={post.post._id} />}
