@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 import { getUserById, editProfile } from '../../actions/user';
 import Loader from '../shared/Loader';
@@ -25,41 +27,48 @@ class UserProfile extends Component {
         avatarUrl: "",
       }
     }
-  };
+  }
 
   componentDidMount() {
     this.props.getUserById(this.props.match.params.id)
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.user.user && prevProps.user.user !== this.props.user.user) {
       this.setState({ user: this.props.user.user })
     }
-  };
+  }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!nextProps.user.isLoading && nextProps.user.user === null) {
+    if (!nextProps.user.isLoading && nextProps.user.user == null) {
       this.props.history.push('/404')
     }
-  };
+  }
 
-  onChangeHandler = event=>{
-    var file = event.target.files[0];
-    var reader = new FileReader();
+  onChangeHandler = event => {
+    console.log(event.target.files[0])
+    const file = event.target.files[0];
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     setTimeout(() => {
       const { user } = this.state;
       user.avatarUrl = reader.result;
       this.setState({ user, isChanges: true });
     }, 1000)
-  }
+  };
 
   onBodyChange = (data) => {
     const key = data.target.id;
     const { user } = this.state;
     user[key] = data.target.value;
     this.setState({ user, isChanges: true });
-  }
+  };
+
+  handleOnChange = (phoneNumber) => {
+    const { user } = this.state;
+    user.phoneNumber = phoneNumber;
+    this.setState({ user, isChanges: true });
+  };
 
   onRadioChange = (data) => {
     const { user } = this.state;
@@ -77,12 +86,13 @@ class UserProfile extends Component {
     const { user: { user, isLoading }, auth } = this.props
     return !isLoading && user !== null ? (
       <>
-        <div className="row mt-5">
+        {(auth.user.id == user._id) && (
+          <div className="row mt-5">
           <div className="col-md-12">
                 <form onSubmit={this.onSubmit}>
                   <div className="upload-image">
                     <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} /></div>
-                      {auth.user.id === user._id && (
+                      {auth.user.id == user._id && (
                           <div>
                             <input type="file" id="avatarUrl" onChange={this.onChangeHandler}></input>
                           </div>
@@ -143,13 +153,16 @@ class UserProfile extends Component {
                   <div className="row">
                   <label className="col-sm-2 col-form-label registered-date">Phone Number</label>
                       <div className="col-sm-10 input-wrapper">
-                        <input
-                          className="form-control"
-                          placeholder="Phone Number"
-                          type="tel"
+                        <PhoneInput
+                          className="custom-tel-input"
+                          name="phoneNumber"
+                          type="text"
+                          country={"by"}
                           id="phoneNumber"
+                          enableAreaCodes={true}
+                          onlyCountries={["by"]}
                           value={this.state.user.phoneNumber}
-                          onChange={this.onBodyChange}
+                          onChange={this.handleOnChange}
                         />
                       </div>
                   </div>
@@ -157,21 +170,21 @@ class UserProfile extends Component {
                     <label className="col-sm-2 col-form-label registered-date">Gender</label>
                       <div className="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="genderMale" name="gender" className="custom-control-input" 
-                          value="Male" onChange={this.onRadioChange} checked={this.state.user.gender === "Male"}/>
+                          value="Male" onChange={this.onRadioChange} checked={this.state.user.gender == "Male"}/>
                         <label className="custom-control-label registered-date" htmlFor="genderMale">Male</label>
                       </div>
                       <div className="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="genderFemale" name="gender" className="custom-control-input" 
-                          value="Female" onChange={this.onRadioChange} checked={this.state.user.gender === "Female"}/>
+                          value="Female" onChange={this.onRadioChange} checked={this.state.user.gender == "Female"}/>
                         <label className="custom-control-label registered-date" htmlFor="genderFemale">Female</label>
                       </div>
                       <div className="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="genderOther" name="gender" className="custom-control-input" 
-                          value="Other" onChange={this.onRadioChange} checked={this.state.user.gender === "Other"}/>
+                          value="Other" onChange={this.onRadioChange} checked={this.state.user.gender == "Other"}/>
                         <label className="custom-control-label registered-date" htmlFor="genderOther">Other</label>
                       </div>
                   </div>
-                    {this.state.isChanges && <div className="col-md-4 mx-auto buttons-wrapper"><button type="submit" className="btn btn-outline-success submit-edit">Save</button>
+                    {this.state.isChanges && <div className="col-md-12 col-lg-6 mx-auto buttons-wrapper"><button type="submit" className="btn btn-outline-success submit-edit edit-button-profile">Save</button>
                     </div>}
                   </form>
                 <div className="text-center registered">
@@ -182,7 +195,26 @@ class UserProfile extends Component {
                 </div>
           </div>
         </div>
-        {!(auth.user.id === user._id) && (
+        )}
+        {!(auth.user.id == user._id) && (
+          <div className="row mt-5">
+            <div className="col-md-6 mx-auto">
+              <div className="row">
+                <div className="col-8">
+                  <h2 className="profile-username">{user.name}</h2>
+                  <p className="profile-username">
+                    <strong>Registered: </strong>
+                    {new Date(user.createdDate).toDateString()}
+                  </p>
+                </div>
+                <div className="col-4 text-center">
+                  <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {!(auth.user.id == user._id) && (
           <div className="row mt-4">
             <div className="col-md-12 text-center">
               <div className="col-4 mx-auto">

@@ -1,14 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import PostForm from '../shared/PostForm'
-import Posts from '../shared/Posts'
+import PostForm from '../shared/PostForm';
+import Posts from '../shared/Posts';
 
 class AllPosts extends React.Component {
-
   render() {
-    const { auth } = this.props
+    const { auth } = this.props;
     return (
       <div className="row mt-6">
         <div className="col-md-10 mx-auto">
@@ -16,16 +15,16 @@ class AllPosts extends React.Component {
           <Posts loading="lazy" queryParams={{}} />
         </div>
       </div>
-    )
+    );
   }
 }
 
 AllPosts.propTypes = {
-  auth: PropTypes.object.isRequired
-}
+  auth: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
-})
+  auth: state.auth,
+});
 
-export default connect(mapStateToProps)(AllPosts)
+export default connect(mapStateToProps)(AllPosts);

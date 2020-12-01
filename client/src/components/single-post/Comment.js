@@ -38,7 +38,7 @@ class Comment extends React.Component {
               </div>
             </div>
             <div className="col-md-2 text-right">
-              {auth.isAuthenticated && auth.user.name === comment.user.name && (
+              {auth.isAuthenticated && auth.user.name == comment.user.name && (
                 <div className="dropdown">
                   <button className="btn btn-link dropdown-toggle" type="button" id="drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="drop">

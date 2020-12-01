@@ -17,7 +17,7 @@ class Subscription extends React.Component {
     if (!auth.isAuthenticated) {
       this.props.history.push('/login')
     } else {
-      const existedSub = subscriptions.find((s) => s.subscriber === auth.user.id)
+      const existedSub = subscriptions.find((s) => s.subscriber == auth.user.id)
       if (existedSub) {
         this.props.remove(existedSub._id)
       } else {

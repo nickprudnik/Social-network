@@ -1,30 +1,29 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { UPDATE_POST } from '../../actions/types'
-import { getById as getPostById } from '../../actions/post'
+import { UPDATE_POST } from '../../actions/types';
+import { getById as getPostById } from '../../actions/post';
 
-import Loader from '../shared/Loader'
-import Post from '../shared/Post'
-import Comment from './Comment'
-import CommentForm from './CommentForm'
+import Loader from '../shared/Loader';
+import Post from '../shared/Post';
+import Comment from './Comment';
+import CommentForm from './CommentForm';
 
 class SinglePost extends React.Component {
-
   componentDidMount() {
-    this.props.getPostById(this.props.match.params.id)
+    this.props.getPostById(this.props.match.params.id);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!nextProps.post.isLoading && nextProps.post.post === null) {
-      this.props.history.push('/404')
+      this.props.history.push('/404');
     }
   }
 
   render() {
-    const { auth, post } = this.props
-    console.log(post)
+    const { auth, post } = this.props;
+    console.log(post);
     return !post.isLoading && post.post !== null ? (
       <div className="row mt-5">
         <div className="col-md-12 mx-auto">
@@ -37,19 +36,19 @@ class SinglePost extends React.Component {
           </div>
         </div>
       </div>
-    ) : <Loader />
+    ) : <Loader />;
   }
 }
 
 SinglePost.propTypes = {
   getPostById: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
-}
+  auth: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   post: state.post,
-  auth: state.auth
-})
+  auth: state.auth,
+});
 
-export default connect(mapStateToProps, { getPostById })(SinglePost)
+export default connect(mapStateToProps, { getPostById })(SinglePost);

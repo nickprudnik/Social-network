@@ -7,69 +7,69 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST,
-  CLEAR_POSTS
-} from '../actions/types'
+  CLEAR_POSTS,
+} from '../actions/types';
 
 const initialState = {
   posts: [],
   totalCount: 0,
   post: null,
   isLoading: false,
-  postId: 0
-}
+  postId: 0,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case POST_LOADING:
       return {
         ...state,
-        isLoading: action.payload
-      }
+        isLoading: action.payload,
+      };
     case CLEAR_POSTS:
       return {
         ...state,
         posts: [],
-        totalCount: 0
-      }
+        totalCount: 0,
+      };
     case GET_POSTS:
       return {
         ...state,
         posts: action.payload.posts,
         totalCount: action.payload.totalCount,
-        isLoading: false
-      }
+        isLoading: false,
+      };
     case GET_POST:
       return {
         ...state,
         post: action.payload,
-        isLoading: false
-      }
+        isLoading: false,
+      };
     case ADD_POST:
       return {
         ...state,
-        posts: [action.payload, ...state.posts]
-      }
+        posts: [action.payload, ...state.posts],
+      };
     case UPDATE_POSTS:
       return {
         ...state,
-        posts: state.posts.map((p) => p._id === action.payload._id ? action.payload : p)
-      }
+        posts: state.posts.map((p) => (p._id === action.payload._id ? action.payload : p)),
+      };
     case UPDATE_POST:
       return {
         ...state,
-        post: action.payload
-      }
+        post: action.payload,
+      };
     case UPDATE_USER_POST:
       return {
         ...state,
-        post: [action.payload, ...state.posts]
-      }
+        post: action.payload,
+      };
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter((post) => post._id !== action.payload)
-      }
+        posts: state.posts.filter((post) => post._id !== action.payload),
+      };
     default:
-      return state
+      return state;
   }
-}
+};

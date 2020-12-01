@@ -3,18 +3,33 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./index.css"
-import { slide as Menu } from "react-burger-menu";
-import { handleOnClose } from "react-burger-menu";
-
+import Menu from 'react-burger-menu/lib/menus/slide'
 import { logout } from "../../actions/auth";
 
 class Header extends React.Component {
-  onLogout = e => {
+  constructor (props) {
+    super(props)
+    this.state = {
+      menuOpen: false
+    }
+  }
+
+  handleStateChange (state) {
+    this.setState({menuOpen: state.isOpen})  
+  }
+  
+  closeMenu () {
+    this.setState({menuOpen: false})
+  }
+
+  toggleMenu () {
+    this.setState(state => ({menuOpen: !state.menuOpen}))
+  }
+
+  onLogout = (e) => {
     e.preventDefault();
     this.props.logout();
   };
-
-  
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -22,21 +37,21 @@ class Header extends React.Component {
     if (isAuthenticated) {
       links = (
           <ul>
-            <li className="menu-item"><Link className="items" to={"/user/" + user.id}>
+            <li className="menu-item" onClick={() => this.closeMenu()}><Link className="items" to={"/user/" + user.id}>
               My Profile
             </Link></li>
-            <li className="menu-item"><Link className="items" to={"/join/"}>Join Room</Link></li>
-            <li className="menu-item"><Link className="items" to="#" onClick={this.onLogout}>Log Out</Link></li>
+            <li className="menu-item" onClick={() => this.closeMenu()}><Link className="items" to={"/join/"}>Join Room</Link></li>
+            <li className="menu-item" onClick={() => this.closeMenu()}><Link className="items" to="#" onClick={this.onLogout}>Log Out</Link></li>
           </ul>
       );
     } else {
       links = (
         <ul>
-            <li className="menu-item"><Link className="items" to="/login">
+            <li className="menu-item" onClick={() => this.closeMenu()}><Link className="items" to="/login">
               <i className="fa fa-sign-in"></i>
               Log In
             </Link></li>
-            <li className="menu-item"><Link className="items" to="/register">
+            <li className="menu-item" onClick={() => this.closeMenu()}><Link className="items" to="/register">
               <i className="fa fa-user-plus"></i>
               Register
             </Link></li>
@@ -45,7 +60,8 @@ class Header extends React.Component {
     }
     return (
       <>
-      <Menu {...this.props} onClose={ handleOnClose } className="navbar-nav">{links}</Menu>
+      <Menu {...this.props} className="navbar-nav" isOpen={this.state.menuOpen}
+        onStateChange={(state) => this.handleStateChange(state)}>{links}</Menu>
       <nav className="navbar navbar-icon-top navbar-expand-lg navbar-light">
         <div className="container">
           <div className="logo-wrapper">
