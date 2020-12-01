@@ -20,19 +20,24 @@ class Posts extends React.Component {
       postCollectionHasUpdated: false,
       ENDPOINT: 'http://localhost:3000/'
     }
+
     socket = io(this.state.ENDPOINT);
     socket.on('RefreshPostsPage',  (data) => {
       this.updateCodeFromSockets(data);
     });
-  };
+  }
 
   updateCodeFromSockets(data) {
     this.setState({postCollectionHasUpdated: true})
-  };
+  }
 
   componentDidMount() {
-    this.props.getAll()
-  };
+    this.props.getAll();
+  }
+
+  componentWillUnmount() {
+    socket.disconnect();
+  }
 
   onPageChange = (activePage) => {
     this.setState({ activePage }, () => {
@@ -53,7 +58,7 @@ class Posts extends React.Component {
         {this.state.postCollectionHasUpdated && 
           <button type="button" className="btn btn-outline-success mb-4 update-button" onClick={this.updatePosts}>We have new posts for you!</button>
         }
-        {!isLoading && totalCount === 0 && posts.length === 0 && (
+        {!isLoading && totalCount == 0 && posts.length == 0 && (
             <div className="text-center info-message">
               <h2>There is nothing</h2>
           </div>

@@ -76,7 +76,6 @@ class Post extends React.Component {
                     ['clean']
                   ]
                 }}
-                autoFocus
                 defaultValue={this.props.post.body}
                 value={this.props.post.body}
                 onChange={this.onChangeBody}

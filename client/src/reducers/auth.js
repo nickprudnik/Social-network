@@ -1,11 +1,9 @@
-import { SET_CURRENT_USER } from '../actions/types';
-import { CREATE_LOGIN_ERROR } from '../actions/types';
-import { CREATE_REGISTER_ERROR } from '../actions/types';
+import { SET_CURRENT_USER, CREATE_LOGIN_ERROR, CREATE_REGISTER_ERROR } from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
-  user: {}, 
-  error: null
+  user: {},
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -16,18 +14,18 @@ export default (state = initialState, action) => {
         isAuthenticated: Object.keys(action.payload).length !== 0,
         user: action.payload,
         error: null,
-      }
-    case CREATE_LOGIN_ERROR: 
-    return {
+      };
+    case CREATE_LOGIN_ERROR:
+      return {
         ...state,
         error: action.payload.data,
-      }
+      };
     case CREATE_REGISTER_ERROR:
       return {
         ...state,
-        error: action.payload.data
-      }
+        error: action.payload.data,
+      };
     default:
-      return state
+      return state;
   }
 };

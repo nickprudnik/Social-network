@@ -49,11 +49,20 @@
   margin: 10px auto 20px auto;
 }
 
-.image-container {
-  
+.edit-button-profile {
+  width: inherit;
+  height: 50px;
 }
 
 .user-image {
   width: 150px;
   height: 150px;
+}
+
+.mobile-telephone {
+  width: 100%;
+}
+
+.form-control {
+  width: 100% !important;
 }

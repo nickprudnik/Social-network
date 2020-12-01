@@ -19,6 +19,7 @@
 
 .navbar-collapse, .profile-username, .subscribe-btn {
   font-family: 'Acme', sans-serif;
+  color: white;
 }
 
 .card-link, .btn-link {

@@ -5,9 +5,6 @@
     },
     "extends": [
         "eslint:recommended",
-        "airbnb",
-        "plugin:import/errors",
-        "plugin:import/warnings",
         "plugin:jsx-a11y/recommended",
         "plugin:react/recommended"
     ],
@@ -22,14 +19,30 @@
         "react", 
         "jsx-a11y"
     ],
+    "parser": "babel-eslint",
     "rules": {
         "react/jsx-filename-extension": "off",
         "jsx-a11y/click-events-have-key-events": "off",
-        "import/no-extraneous-dependencies": [
-            "error",
-            {
-                "packageDir": "./"
-            }
-        ]
+        "linebreak-style": 0,
+        "no-underscore-dangle": 0,
+        "react/prop-types": 0,
+        "no-shadow": "off",
+        "no-use-before-define": 0,
+        "jsx-a11y/label-has-associated-control": "off",
+        "no-param-reassign": 0,
+        "import/extensions": 0,
+        "react/forbid-prop-types": 0,
+        "react/destructuring-assignment": 0,
+        "camelcase": 0,
+        "import/no-named-as-default": 0,
+        "import/no-named-as-default-member": 0,
+        "import/no-extraneous-dependencies": 0,
+        "react/jsx-props-no-spreading": 0,
+        "no-undef": 0,
+        "no-unused-vars": 0,
+        "react/no-unescaped-entities": 0,
+        "react/display-name": 0,
+        "react/no-string-refs": 0,
+        "jsx-a11y/no-noninteractive-element-interactions": 0
     }
 }

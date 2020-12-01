@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useTrail, animated } from "react-spring";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useTrail, animated } from 'react-spring';
 
-import "./Home.css";
+import './Home.css';
 
 const fast = { tension: 1200, friction: 40 };
 const slow = { mass: 10, tension: 200, friction: 50 };
@@ -11,12 +11,12 @@ const trans = (x, y) => `translate3d(${x}px,${y}px,0) translate3d(-50%,-50%,0)`;
 function Home() {
   const [trail, set] = useTrail(3, () => ({
     xy: [0, 0],
-    config: i => (i === 0 ? fast : slow)
+    config: (i) => (i === 0 ? fast : slow),
   }));
 
   return (
     <div className="home-container">
-      <svg style={{ position: "absolute", width: 0, height: 0 }}>
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
         <filter id="goo">
           <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="30" />
           <feColorMatrix
@@ -27,7 +27,7 @@ function Home() {
       </svg>
       <div
         className="hooks-main"
-        onMouseMove={e => set({ xy: [e.clientX, e.clientY] })}
+        onMouseMove={(e) => set({ xy: [e.clientX, e.clientY] })}
       >
         {trail.map((props, index) => (
           <animated.div
@@ -39,7 +39,9 @@ function Home() {
       <div className="form-group home-form">
         <h1>Let's try!</h1>
         <Link className="btn btn-primary" to="/register">
-          <i className="fa fa-globe">{"  "}</i> Sign Up
+          <i className="fa fa-globe">{'  '}</i>
+          {' '}
+          Sign Up
         </Link>
       </div>
     </div>
