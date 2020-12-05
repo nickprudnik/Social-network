@@ -6,7 +6,7 @@ export default ({ user, width = '' }) => (
     {user.avatarUrl
         && (
         <img
-          src={user.avatarUrl}
+          src={`http://localhost:3000/${user.avatarUrl}`}
           className="rounded-circle user-image"
           alt={user.name}
           width={width}

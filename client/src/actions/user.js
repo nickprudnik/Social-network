@@ -24,6 +24,27 @@ export const editProfile = (userData) => (dispatch) => {
     }));
 };
 
+export const uploadImage = (userImage) => (dispatch) => {
+  const fd = new FormData();
+  fd.append('image', userImage);
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }
+  axios
+    .put('/api/userImages', fd, config);
+}
+
+export const getImage = (id) => (dispatch) => {
+  axios
+    .get(`/api/userImages`)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => console.log(err));
+}
+
 const setUserLoading = (isLoading) => ({
   type: USER_LOADING,
   payload: isLoading,

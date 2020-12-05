@@ -1,15 +1,15 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import Quill from 'react-quill'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Quill from 'react-quill';
 
-import { remove } from '../../../actions/post'
-import { edit } from '../../../actions/post'
+import { remove } from '../../../actions/post';
+import { edit } from '../../../actions/post';
 
-import Like from './Like'
-import PostImage from '../PostImage'
-import "./post.css"
+import Like from './Like';
+import PostImage from '../PostImage';
+import "./post.css";
 
 class Post extends React.Component {
   constructor() {
