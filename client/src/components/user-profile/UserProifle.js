@@ -5,7 +5,7 @@ import moment from 'moment';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-import { getUserById, editProfile } from '../../actions/user';
+import { getUserById, editProfile, uploadImage } from '../../actions/user';
 import Loader from '../shared/Loader';
 import ProfileImage from '../shared/ProfileImage';
 import Subscription from './Subscription';
@@ -25,7 +25,8 @@ class UserProfile extends Component {
         phoneNumber: "",
         gender: "",
         avatarUrl: "",
-      }
+      },
+      userImage: ""
     }
   }
 
@@ -46,15 +47,11 @@ class UserProfile extends Component {
   }
 
   onChangeHandler = event => {
-    console.log(event.target.files[0])
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    setTimeout(() => {
-      const { user } = this.state;
-      user.avatarUrl = reader.result;
-      this.setState({ user, isChanges: true });
-    }, 1000)
+    const { user } = this.state;
+    user.avatarUrl = event.target.files[0].name;
+    let userImage = this.state;
+    userImage = event.target.files[0];
+    this.setState({ userImage, user, isChanges: true });
   };
 
   onBodyChange = (data) => {
@@ -78,7 +75,8 @@ class UserProfile extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.editProfile( this.state.user );
+    this.props.uploadImage(this.state.userImage);
+    this.props.editProfile(this.state.user);
     this.setState({ isChanges: false });
   };
 
@@ -91,10 +89,10 @@ class UserProfile extends Component {
           <div className="col-md-12">
                 <form onSubmit={this.onSubmit}>
                   <div className="upload-image">
-                    <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} /></div>
+                    <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} width="50" /></div>
                       {auth.user.id == user._id && (
                           <div>
-                            <input type="file" id="avatarUrl" onChange={this.onChangeHandler}></input>
+                            <input type="file" id="avatarUrl" accept="png jpg jpeg" onChange={this.onChangeHandler}></input>
                           </div>
                       )}
                   </div>
@@ -231,6 +229,7 @@ class UserProfile extends Component {
 UserProfile.propTypes = {
   getUserById: PropTypes.func.isRequired,
   editProfile: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 }
@@ -240,4 +239,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { getUserById, editProfile })(UserProfile)
+export default connect(mapStateToProps, { getUserById, editProfile, uploadImage })(UserProfile)

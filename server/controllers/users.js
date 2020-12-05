@@ -1,7 +1,7 @@
-const Router = require('koa-router')
+const Router = require('koa-router');
+const passport = require('koa-passport');
 
-const User = require('../models/User')
-
+const User = require('../models/User');
 const router = new Router().prefix('/users')
 
 router.get('/:_id', async (ctx) => {
@@ -13,7 +13,7 @@ router.get('/:_id', async (ctx) => {
   }
 })
 
-router.put('/', async (ctx) => {
+router.put('/', passport.authenticate('jwt', { session: false }), async (ctx) => {
   const user = await User.findById(ctx.request.body._id)
   if (!user) {
     ctx.throw(500, "User has not been found")

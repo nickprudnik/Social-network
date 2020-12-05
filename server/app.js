@@ -2,6 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 const server = require('http').createServer(app.callback());
 const io = require('socket.io')(server);
+const serve = require('koa-static');
 
 
 const config = require('./lib/config');
@@ -12,6 +13,8 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 const Post = require('./models/Post')
 
 handlers.forEach((h) => app.use(h));
+
+app.use(serve('uploads'));
 
 app.use(controllers.routes());
 app.use(controllers.allowedMethods());
@@ -38,6 +41,8 @@ io.on('connect', (socket) => {
 
     socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
     socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+
+    // console.log(getUsersInRoom(user.room))
 
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
