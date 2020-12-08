@@ -57,6 +57,16 @@
 .user-image {
   width: 150px;
   height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile-image-input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
 }
 
 .mobile-telephone {

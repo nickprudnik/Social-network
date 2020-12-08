@@ -26,14 +26,15 @@ export const editProfile = (userData) => (dispatch) => {
 
 export const uploadImage = (userImage) => (dispatch) => {
   const fd = new FormData();
-  fd.append('image', userImage);
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'content-type': 'multipart/form-data'
     }
   }
+  fd.append('image', userImage);
   axios
-    .put('/api/userImages', fd, config);
+    .post('/api/userImages', fd, config)
+    .catch((err) => console.log(err));
 }
 
 export const getImage = (id) => (dispatch) => {

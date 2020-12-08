@@ -17,6 +17,7 @@ class UserProfile extends Component {
     this.state = { 
       isLookPosts: false,
       isChanges: false,
+      isProfileImageChanged: false,
       user: {
         name: "",
         dateOfBirth: "",
@@ -46,14 +47,6 @@ class UserProfile extends Component {
     }
   }
 
-  onChangeHandler = event => {
-    const { user } = this.state;
-    user.avatarUrl = event.target.files[0].name;
-    let userImage = this.state;
-    userImage = event.target.files[0];
-    this.setState({ userImage, user, isChanges: true });
-  };
-
   onBodyChange = (data) => {
     const key = data.target.id;
     const { user } = this.state;
@@ -73,11 +66,22 @@ class UserProfile extends Component {
     this.setState({ user, isChanges: true });
   };
 
+  onChangeHandler = event => {
+    this.setState({ isProfileImageChanged: true })
+    const { user } = this.state;
+    user.avatarUrl = event.target.files[0].name;
+    let userImage = this.state;
+    userImage = event.target.files[0];
+    this.setState({ userImage, user, isChanges: true });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.uploadImage(this.state.userImage);
+    if (this.state.isProfileImageChanged) {
+      this.props.uploadImage(this.state.userImage);
+    }
     this.props.editProfile(this.state.user);
-    this.setState({ isChanges: false });
+    this.setState({ isChanges: false, isProfileImageChanged: false });
   };
 
   render() {
@@ -89,9 +93,9 @@ class UserProfile extends Component {
           <div className="col-md-12">
                 <form onSubmit={this.onSubmit}>
                   <div className="upload-image">
-                    <div className="col-sm-2 col-form-label image-container"><ProfileImage user={user} width="50" /></div>
+                    <div className="col-sm-12 col-form-label image-container"><ProfileImage user={user} width="50" /></div>
                       {auth.user.id == user._id && (
-                          <div>
+                          <div className="profile-image-input">
                             <input type="file" id="avatarUrl" accept="png jpg jpeg" onChange={this.onChangeHandler}></input>
                           </div>
                       )}
