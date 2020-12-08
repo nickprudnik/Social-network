@@ -15,8 +15,11 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage });
 
-router.put('/', uploads.single('image'), passport.authenticate('jwt', { session: false }), async (ctx) => {
-  
+router.post('/', uploads.single('image'), passport.authenticate('jwt', { session: false }), async (ctx) => {
+    ctx.body = {
+      code: 1,
+      data: ctx.file
+  }
 })
 
 module.exports = router.routes()

@@ -13,6 +13,11 @@ export const GET_POST = 'GET_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const CLEAR_POSTS = 'CLEAR_POSTS';
 
+export const ADD_CHAT = 'ADD_CHAT';
+export const GET_CHAT = 'GET_CHAT';
+export const UPDATE_ROOM = 'UPDATE_ROOM';
+export const AFTER_POST_MESSAGE = 'AFTER_POST_MESSAGE';
+
 export const SUBSCRIPTION_LOADING = 'SUBSCRIPTION_LOADING';
 export const ADD_SUBSCRIPTION = 'ADD_SUBSCRIPTION';
 export const GET_SUBSCRIPTIONS = 'GET_SUBSCRIPTIONS';
@@ -21,3 +26,4 @@ export const DELETE_SUBSCRIPTION = 'DELETE_SUBSCRIPTION';
 export const USER_LOADING = 'USER_LOADING';
 export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';

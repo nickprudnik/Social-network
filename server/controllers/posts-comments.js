@@ -1,9 +1,9 @@
-const Router = require('koa-router')
-const passport = require('koa-passport')
+const Router = require('koa-router');
+const passport = require('koa-passport');
 
-const Post = require('../models/Post')
+const Post = require('../models/Post');
 
-const router = new Router().prefix('/posts/:postId/comments')
+const router = new Router().prefix('/posts/:postId/comments');
 
 router.post('/', passport.authenticate('jwt', { session: false }), async (ctx) => {
   const post = await Post.findById(ctx.params.postId)
