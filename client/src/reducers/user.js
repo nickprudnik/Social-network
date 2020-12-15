@@ -1,9 +1,10 @@
-import { USER_LOADING, GET_USER, UPDATE_USER } from '../actions/types';
+import { USER_LOADING, GET_USER, UPDATE_USER, UPLOAD_IMAGE } from '../actions/types';
 
 const initialState = {
   user: null,
   users: null,
   isLoading: false,
+  isImageUploaded: false
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +25,11 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case UPLOAD_IMAGE: 
+      return {
+        ...state,
+        isImageUploaded: true,
+      }
     default:
       return state;
   }

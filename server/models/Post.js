@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const postSchema = new Schema({
   body: {
@@ -45,20 +46,20 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
-const populationFields = 'user comments.user'
+const populationFields = 'user comments.user';
 
 postSchema.post('save', async (doc) => {
-  await doc.populate(populationFields).execPopulate()
-})
+  await doc.populate(populationFields).execPopulate();
+});
 
-function populateFields() {
-  this.populate(populationFields)
+function populateFields () {
+  this.populate(populationFields);
 }
 
-postSchema.pre('find', populateFields)
-postSchema.pre('findOne', populateFields)
-postSchema.pre('findOneAndUpdate', populateFields)
+postSchema.pre('find', populateFields);
+postSchema.pre('findOne', populateFields);
+postSchema.pre('findOneAndUpdate', populateFields);
 
-module.exports = mongoose.model('posts', postSchema)
+module.exports = mongoose.model('posts', postSchema);

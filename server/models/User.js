@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const privatePaths = require('mongoose-private-paths')
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+const privatePaths = require('mongoose-private-paths');
 
 const userSchema = new Schema({
   name: {
@@ -18,7 +19,7 @@ const userSchema = new Schema({
     private: true
   },
   dateOfBirth: {
-    type: Date,
+    type: Date
   },
   createdDate: {
     type: Date,
@@ -31,7 +32,7 @@ const userSchema = new Schema({
     type: String
   },
   phoneNumber: {
-    type: String 
+    type: String
   },
   gender: {
     type: String
@@ -42,8 +43,8 @@ const userSchema = new Schema({
   avatarUrl: {
     type: String
   }
-})
+});
 
-userSchema.plugin(privatePaths)
+userSchema.plugin(privatePaths);
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('users', userSchema);

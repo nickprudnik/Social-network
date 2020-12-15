@@ -18,7 +18,8 @@ const ChatForm = (props) => {
   const [room, setRoom] = useState('');
 
   const [chatId, setChatId] = useState();
-  const ENDPOINT = 'http://localhost:3000/';
+  const [newMessage, setNewMessage] = useState();
+  const [messages, setMessages] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -29,12 +30,24 @@ const ChatForm = (props) => {
 
     dispatch(getChatByName(room));
 
-    socket = io(ENDPOINT);
+    socket = io(process.env.REACT_APP_SOCKET, {transports: ['websocket'], upgrade: false});
 
     socket.on("Output Chat Message", messageFromBackEnd => {
-      dispatch(getChatByName(room));
+      setNewMessage(messageFromBackEnd);
   })
-  }, [location.search])
+  }, [location.search]);
+
+  useEffect(() => {
+    if (props.chats.chats !== null) {
+      setMessages(props.chats.chats[0].messages);
+    }
+  }, [props.chats.chats]);  
+
+  useEffect(() => {
+    if (newMessage) {
+      setMessages([...messages, newMessage])
+    }
+  }, [newMessage]);
 
   useEffect(() => {
     let chatsArray = props.chats.chats;
@@ -75,9 +88,9 @@ const ChatForm = (props) => {
     <div className="outerContainer">
       <div className="container-chat">
         <InfoBar room={room} />
-        {(props.chats.chats !== null) && (props.chats.chats !== []) && props.chats.chats.map((chat) => (
-          <Messages key={chat._id} {...chat} name={name} />
-        ))}
+        {props.chats.chats && 
+          <Messages key={props.chats.chats[0]._id} messages={messages} name={name} />
+        }
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
     </div>

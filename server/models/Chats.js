@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const chatSchema = new Schema({
   name: {
@@ -7,36 +8,36 @@ const chatSchema = new Schema({
     required: true
   },
   messages: [
-      {
-        text: {
-          type: String,
-          required: true
-        },
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: 'users',
-          required: true
-        },
-        createdDate: {
-          type: Date,
-          default: Date.now
-        }
+    {
+      text: {
+        type: String,
+        required: true
+      },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+      },
+      createdDate: {
+        type: Date,
+        default: Date.now
       }
-    ],
+    }
+  ]
 });
 
-const populationFields = 'messages.user'
+const populationFields = 'messages.user';
 
 chatSchema.post('save', async (doc) => {
-  await doc.populate(populationFields).execPopulate()
-})
+  await doc.populate(populationFields).execPopulate();
+});
 
-function populateFields() {
-  this.populate(populationFields)
+function populateFields () {
+  this.populate(populationFields);
 }
 
-chatSchema.pre('find', populateFields)
-chatSchema.pre('findOne', populateFields)
-chatSchema.pre('findOneAndUpdate', populateFields)
+chatSchema.pre('find', populateFields);
+chatSchema.pre('findOne', populateFields);
+chatSchema.pre('findOneAndUpdate', populateFields);
 
-module.exports = mongoose.model('chats', chatSchema)
+module.exports = mongoose.model('chats', chatSchema);

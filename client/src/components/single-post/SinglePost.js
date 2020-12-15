@@ -23,7 +23,6 @@ class SinglePost extends React.Component {
 
   render() {
     const { auth, post } = this.props;
-    console.log(post);
     return !post.isLoading && post.post !== null ? (
       <div className="row mt-5">
         <div className="col-md-12 mx-auto">

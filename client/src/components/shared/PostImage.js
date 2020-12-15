@@ -6,7 +6,7 @@ export default ({ user, width = '' }) => (
     {user.avatarUrl
         && (
         <img
-          src={`http://localhost:3000/${user.avatarUrl}`}
+          src={`${process.env.REACT_APP_ENDPOINT}/${user.avatarUrl}`}
           className="rounded-circle post-image"
           alt={user.name}
           width={width}

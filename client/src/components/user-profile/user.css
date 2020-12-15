@@ -76,3 +76,7 @@
 .form-control {
   width: 100% !important;
 }
+
+.invalid-feedback {
+  display: block;
+}
