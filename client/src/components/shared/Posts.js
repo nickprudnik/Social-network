@@ -17,13 +17,14 @@ class Posts extends React.Component {
     super()
     this.state = { 
       activePage: 1, 
-      postCollectionHasUpdated: false,
-      ENDPOINT: 'http://localhost:3000/'
+      postCollectionHasUpdated: false
     }
 
-    socket = io(this.state.ENDPOINT);
-    socket.on('RefreshPostsPage',  (data) => {
-      this.updateCodeFromSockets(data);
+    socket = io(process.env.REACT_APP_SOCKET, ({transports: ['websocket'], upgrade: false}));
+    socket.on('RefreshPostsPage',  (senderId) => {
+      if (senderId !== this.props.auth.user.id) {
+        this.updateCodeFromSockets(senderId);
+      }
     });
   }
 

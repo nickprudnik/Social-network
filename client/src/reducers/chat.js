@@ -29,9 +29,10 @@ import {
           message: action.payload,
         }
       case AFTER_POST_MESSAGE: 
+      console.log(state)
         return {
           ...state,
-          chats: state.chats[0].messages.concat(action.payload)
+          chats: state.chats[0].messages.push(action.payload)
           // chats: [...state.chats[0].messages, action.payload]
         }
       default:

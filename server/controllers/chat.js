@@ -12,21 +12,21 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (ctx) =
 });
 
 router.get('/:name', async (ctx) => {
-  const chat = await Chats.find(ctx.params)
+  const chat = await Chats.find(ctx.params);
   if (chat) {
-    ctx.body = chat
+    ctx.body = chat;
   } else {
-    ctx.throw(404, 'Chat has not been found')
+    ctx.throw(404, 'Chat has not been found');
   }
 });
 
 router.get('/', async (ctx) => {
-  const { query } = ctx
-  const q = 'users' in query ?
-    { user: { $in: query.users.split(',') } } : query
+  const { query } = ctx;
+  const q = 'users' in query
+    ? { user: { $in: query.users.split(',') } } : query;
   ctx.body = await Post
     .find(q)
-    .sort({ createdDate: -1 })
+    .sort({ createdDate: -1 });
 });
 
 module.exports = router.routes();

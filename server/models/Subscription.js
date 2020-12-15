@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const subscriptionSchema = new Schema({
   subscriber: {
@@ -16,6 +17,6 @@ const subscriptionSchema = new Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
-module.exports = mongoose.model('subscriptions', subscriptionSchema)
+module.exports = mongoose.model('subscriptions', subscriptionSchema);

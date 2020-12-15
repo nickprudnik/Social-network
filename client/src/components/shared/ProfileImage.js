@@ -6,7 +6,7 @@ export default ({ user, width = '' }) => (
     {user.avatarUrl
         && (
         <img
-          src={`http://localhost:3000/${user.avatarUrl}`}
+          src={`${process.env.REACT_APP_ENDPOINT}/${user.avatarUrl}`}
           className="rounded-circle user-image"
           alt={user.name}
           width={width}
@@ -17,7 +17,7 @@ export default ({ user, width = '' }) => (
         && (
         <img
           src={`http://gravatar.com/avatar/${md5(user.email)}`}
-          className="rounded-circle post-image"
+          className="rounded-circle user-image"
           alt={user.name}
           width={width}
         />

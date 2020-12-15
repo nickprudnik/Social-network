@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_USER, USER_LOADING, UPDATE_USER } from './types';
+import { GET_USER, USER_LOADING, UPDATE_USER, UPLOAD_IMAGE } from './types';
 
 export const getUserById = (id) => (dispatch) => {
   dispatch(setUserLoading(true));
@@ -34,6 +34,10 @@ export const uploadImage = (userImage) => (dispatch) => {
   fd.append('image', userImage);
   axios
     .post('/api/userImages', fd, config)
+    .then((res) => dispatch({
+      type: UPLOAD_IMAGE,
+      payload: res.data,
+    }))
     .catch((err) => console.log(err));
 }
 

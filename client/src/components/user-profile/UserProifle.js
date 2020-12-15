@@ -11,6 +11,7 @@ import ProfileImage from '../shared/ProfileImage';
 import Subscription from './Subscription';
 import "./user.css";
 
+var userImageName;
 class UserProfile extends Component {
   constructor() {
     super()
@@ -18,6 +19,7 @@ class UserProfile extends Component {
       isLookPosts: false,
       isChanges: false,
       isProfileImageChanged: false,
+      error: false,
       user: {
         name: "",
         dateOfBirth: "",
@@ -54,7 +56,20 @@ class UserProfile extends Component {
     this.setState({ user, isChanges: true });
   };
 
-  handleOnChange = (phoneNumber) => {
+  handleSiteChange = (website) => {
+    let regWebSite = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/;
+    if(regWebSite.test(website.target.value) || website.target.value == ""){
+      const { user } = this.state;
+      user.website = website.target.value;
+      this.setState({ user, isChanges: true, error: false });
+    } else {
+      const { user } = this.state;
+      user.website = website.target.value;
+      this.setState({ isChanges: false, error: true });
+    } 
+  };
+
+  handlePhoneOnChange = (phoneNumber) => {
     const { user } = this.state;
     user.phoneNumber = phoneNumber;
     this.setState({ user, isChanges: true });
@@ -67,19 +82,24 @@ class UserProfile extends Component {
   };
 
   onChangeHandler = event => {
-    this.setState({ isProfileImageChanged: true })
-    const { user } = this.state;
-    user.avatarUrl = event.target.files[0].name;
+    this.setState({ isProfileImageChanged: true });
+    userImageName = event.target.files[0].name;
     let userImage = this.state;
     userImage = event.target.files[0];
-    this.setState({ userImage, user, isChanges: true });
+    this.setState({ userImage, isChanges: true });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
     if (this.state.isProfileImageChanged) {
-      this.props.uploadImage(this.state.userImage);
-    }
+      this.props.uploadImage(this.state.userImage)
+      setTimeout(() => {
+        const { user } = this.state;
+        user.avatarUrl = userImageName;
+        this.setState({ user });
+        this.props.editProfile(this.state.user)
+      }, 1000)
+    } else 
     this.props.editProfile(this.state.user);
     this.setState({ isChanges: false, isProfileImageChanged: false });
   };
@@ -133,8 +153,13 @@ class UserProfile extends Component {
                           placeholder="Website"
                           id="website"
                           value={this.state.user.website}
-                          onChange={this.onBodyChange}
+                          onChange={this.handleSiteChange}
                         />
+                        {this.state.error && 
+                          <div className="invalid-feedback">
+                          Please provide a valid Website.
+                        </div>
+                        }
                       </div>
                   </div>
                   <div className="row">
@@ -164,7 +189,7 @@ class UserProfile extends Component {
                           enableAreaCodes={true}
                           onlyCountries={["by"]}
                           value={this.state.user.phoneNumber}
-                          onChange={this.handleOnChange}
+                          onChange={this.handlePhoneOnChange}
                         />
                       </div>
                   </div>
