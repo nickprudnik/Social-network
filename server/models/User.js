@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const privatePaths = require('mongoose-private-paths');
 
 const userSchema = new Schema({
   name: {
@@ -44,7 +43,5 @@ const userSchema = new Schema({
     type: String
   }
 });
-
-userSchema.plugin(privatePaths);
 
 module.exports = mongoose.model('users', userSchema);
